@@ -1,4 +1,4 @@
-# ytrag
+# Basic RAG Search from video on 2024-03-11
 
 To install dependencies:
 
