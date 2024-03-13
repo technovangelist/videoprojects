@@ -60,8 +60,8 @@ type subtitleJson = {
   videoTitle: string;
 }
 
-const glob = new Glob("*.ttml");
 const subtitleFiles: string[] = []
+const glob = new Glob("*.ttml");
 
 const allSubtitles: subtitleJson[] = [];
 for await (const file of glob.scan("./captions")) {
