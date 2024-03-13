@@ -1,2 +1,4 @@
 ollama
 typing
+scikit-learn
+
