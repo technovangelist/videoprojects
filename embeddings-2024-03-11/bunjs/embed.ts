@@ -64,7 +64,7 @@ const subtitleFiles: string[] = []
 const glob = new Glob("*.ttml");
 
 const allSubtitles: subtitleJson[] = [];
-for await (const file of glob.scan("./captions")) {
+for await (const file of glob.scan("../captions")) {
   let seconds = 0
   const { title, id } = getTitleAndID(file)
 
