@@ -1,0 +1,15 @@
+{
+  "name": "embeddingchunklength-2024-03-14",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "compute-cosine-similarity": "^1.1.0",
+    "ollama": "^0.4.9"
+  }
+}

@@ -1,0 +1,22 @@
+Let me show you something. See this? its ollama. Let me zoom out. Yeah, its on Windows. Not with WSL. Windows. Native. 
+
+At long last it's finally here. 
+
+I want to give you a quick taste of how to install it and what you can do when its running. First you have to get the installer. Depending on when you see this, you may have to go to the Githb Repo and then find it in releases, or you may be able to find it on the ollama.ai website. 
+
+Once you have it, make sure you have your nvidia drivers installed. AMD may be available soon as well. With that ready to go, run the Ollama Installer. This is easy and you should see it complete soon. Once its ready, you can find the Ollama tray icon that lets you quit Ollama or navigate to the logs folder. 
+
+Now you can do the same thing you have been able to do on Mac and Linux for ages. Open a terminal or command prompt and run `ollama run mistral`. `/set verbose` and then `why is the sky blue`. And boom, there we are. Let's try mixtral. It's taking a while to download and this may be fixed in future releases or maybe even the final. I've noticed it takes a while to get started. but once it starts going it seems to work just fine. Now, ollama run mixtral, and I can ask a question. "What is a black hole? explain it like I am 5". And there it goes. This machine is running on a Tesla T4 card, mostly because that's the only GPU I could get running on my GCP account. I have a solution for that coming in another video very soon. And its super cool. 
+
+So it looks very familiar and works just like it does on Mac and on Linux. 
+
+Let's take a quick look at the .ollama folder. We can see its just like it is on the other platforms. I have a models folder and in there a manifests folder with manifests for all the models. You can see that the manifest is the same as the one on linux with a colon in the name for the blob. I don't think that is valid for a filename on Windows, so if we look at the blobs directory, we see that ollama is using a dash there instead. 
+
+When we look at the logs, we can see the full logs for Ollama. It looks like OLLAMA DEBUG is enabled, but maybe that will be turned off for the full release. 
+
+Performance for Windows looks to be comparable to Linux. On my OBM site, at obm.tvl.st, you can see that this Windows machine is very similar to a T4 machine running Linux. 
+
+And that's Ollama running natively on Windows. What do you think? I look forward to seeing the various Windows front ends pop up for this. Do you already have a favorite? let me know in the comments down below. And ask any other questions you have as well and I will try to answer them. Or ask in the discord at discord.gg/ollama.
+
+Thanks so much for watching, goodbye. 
+
