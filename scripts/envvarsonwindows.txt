@@ -1,0 +1,29 @@
+OK, windows is out and so now folks are starting to play with it. And they are hitting some interesting edge cases. Thankfully a lot of those cases already have solutions. So one of them is around where the models go. 
+
+Normally they would go under the users home directory, then .ollama, then models. I have a video that shows where things are stored. That was for the mac and linux, but nothing changes on windows. Everything is in the same place as before.
+
+But in some edge cases, folks have run out of space on their c drive and added another drive to their system. Now they want Ollama to save those models to d or e or some other drive. How do you do that. Well, the solution is the same as on mac and linux, but maybe even easier to solve on Windows.
+
+It's all about environment variables. And the environment variable we need is OLLAMA_MODELS. So go to System Properties and click the button at the bottom labelled Environment Variables. There are two sections here and we want "System" Variables. Click the New button and add OLLAMA_MODELS for the name. Now click the browse button to find the right directory anywhere on your system. When you are done, close that out. Now Ollama is probably already running, so you need to quit it. To do that, click the icon in the task tray and then restart it by running ollama over here. 
+
+Now we can open the command prompt and run ollama pull mistral and we should see the model blobs start to show up in our new directory. That said, it sometimes didn't work for me. I don't know if its just a slow machine or what. But I killed ollama and restarted it again and the second time it took,  and files started showing up in the expected folder. You know, maybe I didn't give it enough time to fully quit before I started it again and that's why it didn't work the first time. So give it a sec before starting and see if that works for you. 
+
+If you want the files to start showing up in the original location, simply deleting the environment variable isn't all you need to do. If you want to keep your machine up and running, then set OLLAMA_MODELS to the new location and you are set. OR delete the environment variable and reboot. I deleted it and files kept going into the old ...new directory. 
+
+Maybe this is because I am relatively new to the current systems as I haven't really used Windows since I worked at Microsoft a couple of decades ago. I was there in the time of Brian Valentine running Windows.... XP just came out. Bill and Steve were still there... Anyway, this is what worked for me. Hopefully you find it useful.
+
+If you have any questions about this or any other topic about AI and Ollama, life in general, and everything in between, ask away in the comments below. 
+
+Usually I don't ask you to like and subscribe because I never do that on videos I watch. But I did ask on a fairly recent video, for some reason. Someone commented that when i did, the button wiggled a bit. So let's try an experiment... for science. I'll say it and we can see if it wiggles. like and subscribe to see more videos as they come out. did it work? hmmm, maybe you need to click the button. Do it...you know, in the name of science. 
+
+Well, anyway, I appreciate everyone who does it. Thanks so much for watching. goodbye. 
+
+
+---
+short
+
+Windows is out and now folks are starting to play with it. In some cases, folks want Ollama to save models to d or e or some other drive. How do you do that. Well, the solution is environment variables. And the environment variable we need is OLLAMA_MODELS. So go to System Properties and click the button at the bottom labelled Environment Variables. There are two sections here and we want "System" Variables. Click the New button and add OLLAMA_MODELS for the name. Now click the browse button to find the right directory anywhere on your system. When you are done, close that out. Now Ollama is probably already running, so you need to quit it. To do that, click the icon in the task tray give it a sec before starting and then restart it by running ollama over here. 
+
+Thanks so much for watching. goodbye. 
+
+

@@ -1,0 +1,11 @@
+Hey there, it’s matt, one of the maintainers of ollama. I wanted to introduce you to the chat api endpoint. One of our goals has always been to make the best tool for users and developers working with ai. So the main way to generate an answer from a model has always been the generate endpoint.
+
+If you don't have Ollama yet, you can find it at ollama.ai. Click the download button and install it. You will get a CLI UI and a server that responds on a set of RESTful endpoints. 
+
+es input, then add that to a message and send all the messages to the chat function. that function outputs a message to the list of messages and I repeat. The chat function makes a call to the endpoint, passing the model and the messages. Then i cycle through the responses pulling out the content of each message which gets added to the output and printed to the screen. The full message then gets returned to the main function. 
+
+And that’s it. You can see that working with the chat endpoint is easy, but maybe a bit more work than the generate endpoint. that extra work comes with the benefit of being able to do more with the history. For instance you can decide to keep the last 5 messages in full and to summarize anything older. or maybe you keep any short message and summarize the outputs with more than 100 words.  Some folks are also finding that it allows alternate techniques like Chain of Thought prompting easier. I think that’s pretty cool.
+
+I can't wait to see what you do with it and hope you will share it with me in our discord, which you can find at discord.gg/ollama
+
+Thanks so much for watching. goodbye.

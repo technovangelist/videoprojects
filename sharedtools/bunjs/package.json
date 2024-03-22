@@ -1,0 +1,14 @@
+{
+  "name": "vp-sharedtools",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@stdlib/nlp-sentencize": "^0.2.1"
+  }
+}

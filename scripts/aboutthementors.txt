@@ -1,0 +1,30 @@
+what if you had an in with your favorite dream mentors? Maybe you could just type in a question and within seconds, faster than an email, you see one of those mentors typing out their answer just for you. "I have a business idea about selling evil scented soaps to dogs". And seconds later Gary V starts responding with his thoughts on this idea. A few seconds after that, Sheryl Sandberg chimes in and gives her take. And then for a little comedic relief, Owen Wilson closes out the conversation. If I told you i could make that happen, would you stay till the end of this video? well, I can't really say that, but I came up with a demo app that approaches that idea in an interesting way and you can have a variation of your real life dream mentors waiting for your questions. 
+I first showed this recently at an event in San Francisco called Chat8VC, hosted by the venture capital firm 8VC. Let's try it right here. "I have a business idea about selling evil scented soaps to dogs. What do you think?". And within seconds, I start getting responses from three random well known people. So what is actually going on here?
+
+At the heart of it is Ollama, an open source project I am a maintainer of. Ollama is the easiest way to run large language models, or LLMs, locally on your laptop, on Mac, Linux, and Windows. I can just run 'ollama run llama2' and start asking questions that I might have asked ChatGPT before but maybe I don't feel like having my sensitive info finding its way into the model. 
+
+The way we get the personalities of individuals to show up is to create a special prompt. An LLM has been trained with the content of the Internet to understand how words go together depending on what we are talking about. We have to give the model a system prompt and a prompt to guide the LLM to give the kind of answers that we need. 
+
+I tried different approaches to getting a reliable personality. I tried giving it examples from interviews the person had given in the past. I tried with a lot of examples and with just a few. And actually, the less info I gave it, the truer the outcome became. But it still wasn’t that great. 
+
+Then I stumbled on a different idea, to come up with a short biography of the user, along with a discussion of the verbal tics and mannerisms that show up when the person speaks publicly. 
+
+The first few attempts at this were using handcrafted bios, but I quickly realized that the Stable Beluga 70 billion parameter model did a good job of coming up with the info I required. The only downside is that it's slow, and I want the model to respond quickly, so I need to use a smaller model, at runtime. Llama2 7b will be better for that. 
+
+So let's take a look at what a model is. The most common site for finding large language models is Hugging Face. This is a great index for Machine Learning and AI experts who want to do research. It's not the best site for folks just wanting to use the models in their normal lives. But let's say you have found a model that works and you download it. To use it in most tools, you need to find a system prompt and a template. Without the template and the system prompt, the model, or more specifically, the model weights alone, are useless. So really a complete model should be the weights combined with the system prompt and template, as well as some parameters. And that's what models are when you use Ollama. 
+
+To create a model, you build a modelfile, which is much like a Dockerfile. We start with a source model. This is normally going to point to one of the models in the Ollama library. Then you can add some parameters if you have any. Next is the Template. This formats your question and the system prompt in a way that the model will understand so you don't get back garbage. And finally include the system prompt that tells the model how to respond. 
+
+Any of the instructions included in the parent model will be inherited by your model unless you override them by including them in this file. 
+
+Ok, so let's build a new model for a new mentor. We will build it for Sheryl Sandberg. I have a script that basically calls on the Stable Beluga model to generate a bio for this person and automatically outputs it to a new Modelfile. Let's take a look at what got generated. We see that as of the training for the Stable Beluga model, which is based on Llama2, Sheryl Sandberg was still the COO of Facebook, but she isn't anymore. So we need to go in and tweak, but it's a good first draft. 
+
+I can convert this into a model by running 'ollama create mattw/sherylsandberg'. 'mattw' is my namespace, so it's where I upload all my models. You can find them at ollama.ai/mattw. I can now test the model by running ollama run mattw/sherylsandberg. Finally ollama push mattw/sherylsandberg to post it to the library. 
+
+Now, I'll update my code for my mentors to include Sheryl and run it on a question: 'What is the best way to meet people at an event'. My code picks three people at random to answer the question. the first person just sees the question. The second person sees the first answer and the third person sees the first two answers. Sometimes they answer and refer to the other folks in the conversation, and sometimes they don't. 
+
+I find this a lot of fun to play with. Is it perfect? No way! Will you confuse the AI's for the real thing? only if you are drunk. Is it fun to show at my presentations? Absolutely.
+
+So I hope you have fun with it. It should find its way into the examples in the Ollama repo really soon. Let me know what you think of it, and let me know in the comments what else you are doing with Ollama. If you don't know about ollama yet, you can find out about it at ollama.ai. 
+
+thanks so much for watching. goodbye

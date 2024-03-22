@@ -1,0 +1,20 @@
+When using the Ollama CLI or repl, there are now keyboard shortcuts you can use to move around the prompt. These can be useful when leveraging the previous prompt but you need to change something. On Linux, the shortcuts should work as expected, but its possible that on Mac, they may not work as designed. Let's take a look at why this happens. 
+
+
+To get to the REPL, run `ollama run` and then the modelname. llama pro just came out, so i will use that one. To find the list of shortcuts, type /? and then shortcuts. You can see there are a few options here. ctrl a and ctrl e move to the beginning and to the end of the line. This can be a little confusing. I think anytime you see line or sentence, really think of it as 'prompt'. So ctrl A moves to the beginning of the 'prompt' and ctrl e moves to the end of the 'prompt'. 
+
+Next comes alt b and alt f for moving back and forward by a word. On my mac, this didn't work. If you are seeing a similar issue, then this might be the way to fix it for you. If you are using the standard mac terminal, then open preferences. Navigate to profiles and then whichever profile you are using. Go to the keyboard tab and then check the checkbox for 'use option as meta key'. 
+
+If you are using iterm, bring up preferences, then profiles then the keys tab. Then the sub tab for general. You can see there are settings for the left and right option key. Mine were already set to Escape plus. But my left option key had 'Apps can change this' enabled. Disable that. 
+
+Now go back to the terminal and alt (or on the mac, option) b and f work as expected.
+
+Finally there is ctrl k and ctrl u to delete everything before or after where the cursor is. It says sentence as of this recording, but just think of it as the entire prompt to or from the cursor. 
+
+The last 3 options are ctrl L to clear the screen, ctrl c to stop the model from responding, and ctrl d to quit the repl. 
+
+If you are using a different terminal and you are having similar problems, Look around for any preferences that deal with the alt / option key. that may be the 'key' to the solution. Maybe even include what you did in the comments below.
+
+Well, hopefully this is useful for you. If there is anything else you would like to see, let me know in the comments below. 
+
+Thanks so much for watching, goodbye

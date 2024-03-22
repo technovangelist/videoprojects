@@ -1,0 +1,71 @@
+thumbnail - Shiny Llava with a volcanoe on screen
+
+Shiny Llava! Yup we have a new model and a new version of Ollama to support it. Ollama 0.1.23 is out and along with it, Llava 1.6 has been released, offering 7, 13, and 34 billion parameter variants. I'll talk more about llava and give some examples in a bit. First let's look at some of the other features in 23. 
+
+Keep Alive. Wow, this has been a hot request for a long time. When Ollama starts with a model, that model stays in memory for 5 minutes. Let me tell you how many folks are happy with that.... exactly none. There are two strong opinions on this: One group says it should be longer and the other says it should be shorter. So now for API requests, you can pass a keep_alive parameter setting. This is a string. If you just pass 30, then its 30 seconds. But tacking on an s, m, or hr will clarify things a bit. This is just in the API for now. Maybe in the future, we will get this on the command line or as an environment variable or in the REPL. 
+
+Support for Nvidia GPUs has expanded a bit so some older cards are now supported. As long as your GPU has a compute capability of 5 or higher, you should be set. That ancient ultra cheap eBay special though may still only be good for scrap and not much more. 
+
+The ollama debug  = 1 setting that I demo'd in a recent video is now in the product, so you don't have to build to get that. What that did was give the full details on prompts and outputs in the logs for ollama. Definitely not something you want running all the time, but when trying to figure out what an application is doing, it can be magic. 
+
+There were a few more smaller things, but lets start talking about multimodal. First you can add an image path when running ollama run. Just tack on the path to the end of the command. This isn't for working with the image interactively, but rather when you are also asking the question on the command line.
+
+And now you can send a message to a multimodal model without sending the image, though I am not sure why.
+
+Ok, so lets get into using llava 1.6. Llava stands for Large Language and Vision Assistant and its all about doing image to text. First off, how do you get it. Well just like any other model, do ollama pull llava, or whatever tag you are using. If there is a newer version available, it will download what is new. I have a tool, creatively called ollamamodelupdater that will go thru all your models, searching for ones that need an update and then it pulls the update. It's more than just running ollama pull on everything. My tool compares the manifest on ollama.ai with what you have and only initiates the download if there is something different. This often saves me 20-30 minutes to update everything. There will be a link to the tool below in the description.
+
+After you download the model, you can still go back to the previous version. Go to the ollama.ai page for llava and then the tags page and you can see there are a bunch of models that are the version 1.5 models. If this page is a bit confusing to you, check out this video that describes what is going on here. 
+
+So while you are downloading the new model you might be curious about what is new. The model now supports a higher resolution. This may be a bit confusing. Llava supports high resolution images, but to do so, it has to split the image into smaller pieces and then recognize what's in each piece, then flatten the images and results. Now, because it supports the higher resolution, it doesn't have to split the file up as much as it did before. 
+
+There is better visual reasoning and ocr. It's not a full on OCR engine; there are lots of OCR tools that run on low powered machines that perform better. And its definitely not great at what is often called ICR for handwriting, but it's still amazing to see how much better this is getting and it won't be much longer before those OCR tools can't compete. It becomes more interesting when you combine OCR with understanding the meaning on the image. So here is an example from their announcement paper. It’s an image showing flight info and the prompt is: I need to pick up my wife. I live in San Jose. When should I leave? And the model spits out: 
+
+"Based on the info provided, the flight is scheduled to arrive at 11:51 at SFO. If you live in San Jose, you should consider the travel time which is 45-60 minutes depending on traffic.
+
+To ensure you have enough time, you should leave San Jose no later than 11:00 to account for traffic and unexpected delays. However, it's a good idea to leave earlier "
+
+That’s pretty cool. Combine this with function calling and then maybe you get the actual travel info that day and add the appointment to the calendar and then this gets really amazing. 
+
+Here is a cool demo from AI and Design on Twitter where he has the model roast himself. "fashionably bald and bearded"? I resemble that remark.
+
+Here is another one I think is really awesome. It comes from Tremorcoder in the Ollama Discord. Are you signed up for the ollama discord? You can find it at discord.gg/ollama.  He gives the model an image and then asks for recommendations for edits to improve the image. That's such a cool use case. Apparently Llava 1.6 is so much better than 1.5 was for this.  
+
+One of my favorites is this Poetroid Camera, a play on Polaroid, which having worked at a camera shop in the 80's and 90's on the island near Miami where I grew up, I remember well. It recognizes what's in front of the camera, then generates a poem based on it. I thought it might be fun to try to recreate the software part of this, so I built a simple example. Let's take a look at it.
+
+Right up top I read in a style and an image path from the command line. Then I create a new ollama object. I read in the image file into a buffer and then base64 encode the image. 
+
+Now I call the ollama chat endpoint, passing the llava model a simple prompt and the image. The first attempt at this I had it write the poem itself. But Llava seems to suck at coming up with different styles of poems. So instead I just have llava describe the image. Then I passed the description to llama2 and had it make a poem in the style of someone. And it's pretty cool. Let's try one. 
+
+It’s a picture of a motion sensor from onvis and it does an ok job. Next is a blurry image of a stream deck which it interpreted as some DJ equipment. I'll skip that one. But the third try is a view of the sunset from our house. You can see Rainier over here and downtown Seattle. Gorgeous. And here is what it comes up with for Dr Seuss:
+
+Oh my oh me! Oh what a sight to see!
+A sunset view so serene and bright, you'll see!
+In the background, a house stands tall and proud,
+Overlooking the water, reflecting the day's crowd.
+
+Above the house, clouds drift by in the sky,
+Tinted with colors that make you sigh.
+From warm oranges to cooler blues, they play their part,
+In this sunset scene that captures your heart!
+
+In the foreground, a railing can be seen,
+Suggesting we're up high, in this sweet dream.
+The shadows grow long and the sun descends,
+Early evening, oh what a wonderful friend!
+
+No text to distract or confuse, just pure delight,
+In this image that fills us with such pure sight.
+So come and gaze upon this view with glee,
+A sunset scene so serene, it's plain to see!
+
+Yeah, that’s fun. Now a Haiku of the same image:
+
+Sun sinks low in sky
+Golden hues upon the sea
+Peaceful evening's grace
+
+Pretty cool. So that’s a little of what you can do with llava and whats new in Ollama 0.1.23. Do you have any cool projects you have seen with llava? Or how about ideas for things you want to build with it? let me know in the comments below. Maybe I'll cover what you are up to in a future video. 
+
+Thanks so much for watching. Goodbye
+
+

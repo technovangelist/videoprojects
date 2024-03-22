@@ -1,0 +1,44 @@
+How often have you asked out loud, I wish I had an AI model that responded only in emojis? Like every day right? I know. And for some reason the team building Ollama has not listened. Insanity. So we are going to fix that today. You and me. And in the process you will learn how to convert and quantize a model.
+
+It's not hard but it also takes a bit of effort to get it going... and maybe some false starts. And it doesn't always work.
+
+So the first step is finding the right model. Lets go to HuggingFace. Up top, I'll search for emoji and then show all the models. I don't want to create an emoji, that would be silly. I want to do text generation, but with emoji. So select Text Generation over on the side. And the first result is OpenHermes Emojitron 001. Perfect. 
+
+Scroll down and this seems to be exactly what we want. Exactly what everyone NEEDS.  Now go to the files tab and click on the config.json file. Notice that architecture is MistralForCausalLM. That’s good. That’s one of the architectures supported. 
+
+We should download the model now. But I have always had trouble just downloading the files the normal way with git. So I really like HuggingFaceDownloader by "boda ay"? You can grab the executable for the releases and get it installed. I have a folder off my users root called bin so I just throw it in there.
+
+ok, so go to the repo on huggingface and click the copy icon next to the repo name. And now go to whereever you want your models to be downloaded to and run `hfdownloader -s . -m` and paste the repo name. Press enter.
+
+Those files are downloading so now lets get the conversion process working. Make sure docker is installed and running on your system. Then in a different terminal,  run `docker pull ollama/quantize`. 
+
+How's the hugging face downloader process going. We need to wait for the model to download, so I will speed on to that being done. 
+
+So here we are in the folder we ran that command in. Move into the directory created for the raw model. We need to run `docker run --rm -v .:/model ollama/quantize`. This is not going to work, but it shows us something we need. Docker run will run an image to create a new container on your system. `--rm` removes the container once the process is complete. `-v .:/model` tells docker to mount a volume. Take what ever is in the current directory, represented by the dot, and mount it in the container as `/mount`. `ollama/quantize` is the image we want to run. And then the command that is being run inside the container takes 2 parameters. First, `-q` specifies the quantization. And that’s why I wanted the command to fail. We need to know which quantization to use. The fastest to run and the best compromise in performance and quality is usually `q4_0`. So run that `docker run` command again, adding  `-q q4_0 /model` to the end. I'll try to remember to put the full command in the description, but I am sure someone will call me out on forgetting. 
+
+If everything works and the model is configured correctly then we should see a lot of activity. The model is first being converted to GGUF format. And then it's being quantized to 4 bit. Quantization simply means that the 7 billion 32bit floating point numbers are being quantized to 16 bit integers. To visualize this I need some cool graphics and I am working on that before making a video about quantization. 
+
+There are now 2 new files here. f16.bin which is the converted model, and q4_0.bin which is the 4bit quantized gguf model file. This second file is often referred to as the model weights, but its kinda useless without a template, possibly a system prompt, and maybe some parameters. We can make a guess about the template but it's best if we look in the Hugging Face readme. Their isn't a standard way of showing this, so there may be some sleuthing we need to do.  Down here at prompt format it says "OpenHermes-Emojitron-001 uses ChatML as the prompt format, just like Open Hermes 2.5.It also appears to handle Mistral format great. Especially since I used that for the finetune (oops)". I wish they put the format in here, but now we have to figure out what mistral uses since that’s what the fine tune was based on. The easiest way to do this is to go to ollama.ai, click Models, then search for mistral. Now click tags and choose the first one. scroll down and we see the template.
+
+`[INST] {{ .System }} {{ .Prompt }} [/INST]`. All of those brackets are very important. So now lets open a code editor. I am using vim just to keep it simple. The first line is the FROM instruction: `FROM ./q4_0.bin`. Next we need a template. I'll copy that template from the ollama.ai site and paste it in here. And that’s the minimum we need. So exit out and create the Model: `ollama create emojitron`. Since we are in the same directory as the Modelfile, and it's called Modelfile, we don't need to specify it. 
+
+Now `ollama run emojitron`.  hi. and we got an emoji, followed by a control phrase im_end. "what is the meaning of life". We get some emojis and that im end again. ok. lets get out of here and edit that modelfile again. I'll copy the "im end" text so i can paste it in. Now add `parameter stop` and paste in the text. Exit out and run the create command again. Now do ollama run again.  
+
+"what is the meaning of life". cool. "create a recipe for spicy mayo". nice. "what is a black hole". Oh yeah, neal degrasse tyson, your job is mine. And now for the biggest challenge that some of us will ever face. "how are babies made. explain like I am 5". awesome. I love that "baby comes soon" that you see at the end. 
+
+That worked perfectly. It doesn't always work perfectly. We used a docker image to do the conversion and quantization, but that was removed from the docs recently. Maybe it doesn't work as reliably for most models. So there is the older process which is more manual. It involves cloning the ollama repo and using the llama cpp submodule, then creating the quantize command and running the python scripts yourself. So that means getting a working python environment which is always a pain in the butt. You can find the instructions for the process here in the repo and scroll down to importing pytorch and safetensors. But first check the architecture in the config.json file. Unfortunately i don't think the architectures supported is actually documented. But you can probably guess some of them. 
+
+Sometimes the output is going to complain about something and suggest a command line parameter. That won't work using the docker method so you will have to manually run the steps. I have had that a few times with needing to pad the size of something. Add the parameter and it worked just fine. 
+
+The next challenge is always the template. Sometimes model makers state the template, but often they just seem to assume you will know. And so you have to try a bunch. You can often figure out the base models then either look up their readmes or look at the model on ollama.ai. Then, get the formats for llama2, mistral, open hermes, and others and just try each one, hoping to get a match. 
+
+So now you have a model and you want to share it with others, right? You will need a namespace to do that. If you don't already have one setup, then go to ollama.ai and click the sign in button. Below your credentials there is a "create account" link. enter your email, a username, and a password. Make sure you set the email address to something you will have access to forever. Using a work account is great until you don't work there anymore. The username I think has to be 3 or 4 characters or more. There is only one exception to that....mine. Once you have done that you will see the instructions to add your public key to Ollama. This looks like an SSH key but it isn'. Make sure you grab the public key from your .ollama directory. 
+
+Next we need to rename our model because emojitron doesn't have a namespace. so `ollama cp emojitron` and then your namespace, which for me is just the letter `m`. and then `/emojitron`. If you rename yours to m/emojitron, you won't be able to push it because you don't have my ollama key.... I hope.
+
+Now you can push the model. `ollama push m/emojitron`. And the model will upload. This takes however long your Internet connection takes. Once that is done, you should edit the short description for the model. And then Edit the longer description for the model. Now share with the world your incredible achievement, win incredible glory, and retire tomorrow with your share of the worlds money. Simple.
+
+let me know if there is anything else you would like me to cover in these videos. I love making them and can't wait to see your comments down below pointing me to your new models. 
+
+Thanks so much for watching. Goodbye. 
+

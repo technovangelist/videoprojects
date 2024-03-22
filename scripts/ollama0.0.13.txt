@@ -1,0 +1,23 @@
+Hey there, 
+
+It's matt williams from Ollama. Last night I finally posted the video about 0.0.12 and today I get to post another one about 0.0.13. This one is even bigger than the last. 
+
+Just like last time I have two commands I am running, but now it’s the opposite way around. So Ollama is 0.0.12 and oolama is 0.0.13. And to make it easier to say in the video, I will call 0.0.12 ollama 12 and 0.0.13 I will refer to as ollama 13. Again that’s just to make the video easier to follow.
+
+Ok, lets get into it. 
+
+Models now stay in memory between messages. This is huge. Before if you had a chat session with ollama, we spent some time loading the model into memory. With. every. single. prompt. <shrug>. Now in 13 we are keeping it loaded in memory until you end the session with ollama. So lets ask a few questions in 12. and now ask those same questions in 13. Yeah, that’s pretty sweet. Oh and did you notice the change in the verbose output? Lets look at one of those from 12 and here we are in 13. You can see a lot more detail not in the output.
+
+Next, we expand our compatibility story. Up until 12, we only supported Macs with Apple Silicon. So that’s the M1 and M2 chips. Now we have expanded that to Intel Macs and we are distributing the executable as a Universal binary. so no need to choose which platform you are on. And Windows and Linux support will be coming soon.
+
+When you are in a chat with ollama, you now have a set of slash commands for show. this will let you inspect the current model to find out how its configured. You can show the license, or the system prompt, or the template used for the model. Did you know about the slash commands? You can turn on verbose, to see stats for each prompt, and /help will show you all the commands that are available.
+
+You can also now have multi line strings when you run ollama run. These start and end with 3 double quotes. This was something that was requested in the Discord. Did you know about the  dIscord? you can find out about it when you click the discord link at the top of the ollama.ai website.
+
+Up until this version, whenever there was a new version, we would put a dialog right in front of you announcing the new version. If you chose to not install it then, we would automatically install it the next time you ran the server. Now we will show a more subtle hint that an update is ready in the menubar. There isn't really a difference in how we do the update, just how we alert you. This should result in a much better overall user experience. 
+
+When we first put out Ollama and started watching the Discord, we saw a number of folks experiencing crashes with Macs with 8GB of memory. We have fixed most of those issues so that those users should have a better experience going forward
+
+We also fixed some issues when you had multi line strings in a modelfile, such as with the system prompt. So that’s great to see.
+
+And that is pretty much everything new in version 0.0.13 of ollama. I hope to see you all in the discord and I really do want to learn about how you are using Ollama. Until next time, goodbye.

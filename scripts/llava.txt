@@ -1,0 +1,25 @@
+Hey there, it's matt, one of the maintainers of ollama. Recently we added support for the llava models in Ollama and they are pretty cool. llava stands for large language and vision assistant models and means that you now have the ability to incorporate vision into your ai applications. You can give the model a prompt and an image and it will do a pretty great job of recognizing what is in the image.  How good? well lets look at a few examples. 
+
+Ill start by running 'ollama run llava'. Now you will need a recent version of ollama to get this to work, and you can install ollama at ollama.ai.
+
+Now ask what does this image show and drag an image over. "shows a beautiful view of the ocean and surrounding hills...sun setting in the distance...appears to be a picturesque landscape that may offer a relaxing spot...". And here is the image. It's close. Its actually a house we rented in Tiburon just north of sf, but it’s a good description. 
+
+Lets try again. " man with glasses wearing a black tshirt and grey hoodie." Not quite a hoodie, but its me and i do have a black tshirt. 
+
+Heres another. "group of 3 llamas standing together" starts out right. "desert landscape?" well, maybe not.
+
+"a colorful bird flying close to the waters surface". Yeah, that seems to match the image. 
+
+"interior of a car, with drivers side view. ... car is located on a dirt road surrounded by trees". This one is pretty amazing.
+
+"majestic snow capped mountain". yup, pretty much dead on.
+
+So, often the descriptions it comes up with are really good. but sometimes they go into weird directions. This is still early days for open source vision models. We have llava and bakllava on the library today, and llava is also available as a 13b model, though it doesn't seem much better than the 7b model. 
+
+One of the interesting use cases I have seen for this is a automatic image renamer. So take the source name that is probably just an image count from the camera, figure out the keywords in the image, and rename the file to those keywords. Or maybe a better solution is to add the description to the EXIF metadata of the image for something like Lightroom to manage. 
+
+There are so many amazing ideas that are going to come out of this and when we start to see other models get released that take advantage of it, its going to be incredible. 
+
+I would love to see what you are building with vision. let us know in the discord, which you can find at discord.gg/ollama.
+
+Thanks so much for watching, goodbye.

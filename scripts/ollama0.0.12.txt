@@ -1,0 +1,24 @@
+Hey there, 
+
+Its Matt Williams from Ollama. A few days ago we released version 0.0.12 and I wanted to show you whats new and interesting. 
+
+When i run ollama in this video, you will notice 2 different commands. First there is ollama. That’s the version that you can install from the website. Then i have oolama. That is a special version I have compiled to let me see the previous version, 0.0.11, purely for the purpose of making this video. 
+
+Also, I will refer to v0.0.12 as version 12 in this video, and 0.0.11 as version 11, just to keep things simpler as I speak.
+
+So lets start with a new subcommand. when I run ollama 11, you can see I have all the commands you are used to. but ollama 12 introduces cp. This will make a copy of the model with a new name. because of the way the layers work with models in ollama, we aren't actually copying the big files that can be many many gigabytes, but rather copying the manifest that references them. This will give you a nice way to change the name of any model you may have created. And if you remove the old model, you are just deleting the manifest that describes it. When you remove the last model that references one of those big files, then we can remove them. 
+
+The next improvement I want to cover is support for running k-quant models. Many of these models start with the tokens represented by 16bit floating point numbers. This provides for a lot of precision, but at the cost of a lot of space to store the information. Quantization reduces the precision to 2 bit integers, 4 bit integers, 6 bit integers and other levels of precision to save the space, and are often still surprisingly useful. More recently k quant models were introduced that offer a more efficient method to reduce the precision, resulting in even smaller models while again staying effective in many cases.  I don't have a model to show you for this, but we will be adding them soon. The important thing is that we have expanded our support for different types of models.
+
+Next is some performance improvements from enabling Accelerate. Accelerate is an apple feature that "provides high performance energy efficient computation on the cpu by leveraging it's vector processing capability"
+
+We can see this by running the llama2 model 11 and seeing that the CPU is having to work pretty hard to evaluate the prompt. The answer uses the GPU and is very efficient already. But when we switch over to 12 and run the same question, you will see that the prompt eval is much faster and used less cpu.
+
+In the Discord, we saw a few folks who were trying to access the Ollama API from a website. If you have done anything like this in the past you may know about CORS and how much of a pain it is. But now you can access the API from websites on localhost.
+
+And the last of the improvements is around create. when you make a modelfile the first inst is a FROM instruction. In ollama 11 if you tried to create this model from a model that is already in the registry, it would fail because you needed to pull the model first. Now, we will pull for you if the model hasn't already been pulled. This is a much better new user experience
+
+Finally there were a bunch of bug fixes which are all great to see. And that’s whats new in version 0.0.12 of ollama. You can find out more at ollama.ai and we can't wait to hear how you are using the tool. 
+
+
+

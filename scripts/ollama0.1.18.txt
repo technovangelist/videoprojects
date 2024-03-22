@@ -1,0 +1,23 @@
+And boom, there is another version of Ollama out for everyone to play with. Let's take a look at what is new in this one: 
+
+The repl is the main UI for most folks using ollama alone without any other addons. But sometimes movement around the prompt in the repl can be a bit frustrating. You can paste multiline text in there, but correcting something in that text isn't always easy. Patrick on the ollama team added a lot of control there, but it wasn't fully documented. And now it is. I'll show you what you can do here in a little bit. 
+
+There is apparently better performance when sending followup messages to ollama using the repl or the api. There were reports of ollama slowing down after a few back and forths, so I hope that is now resolved. 
+
+For folks with nvidia gpu's with 4gb of vram who tried to load a 7b model, you should have fewer errors. We shall see if those comments go away in the discord.
+
+Support for Llava models came in late December. You could say something like "describe this image", then drag over that image onto the prompt, and the path would be pasted to the end of the prompt. Well now prompts can start with the file path. I'll show you that in a sec as well.
+
+A few versions ago there was a release that would allow a model to stay in memory if you just changed the system prompt. I used this in my mentors example where I would ask different personalities a question. But if you changed certain options or parameters, it should reload, but it wasn't doing that. That is now fixed.
+
+Ollama started out when GGML was the only format for llama.cpp. And then a few months back, the authors of that tool haphazardly changed the format to GGUF without a whole lot of notice. Ollama continued to support both GGML and GGUF. This means there are essentially two parts of llama.cpp in there to support both models. That will be going away soon, so any models you have that use ggml will now be automatically repulled and updated to gguf. If you have posted a model to ollama.ai that uses ggml, you should update them. 
+
+So now lets go take a look at a couple of those. Lets start the repl using `ollama run llama2`. now press forward slash, question mark. or forward slash and the word help. most of this has been here for a while. What is new is that last item: slash question mark shortcuts. You can see a few items here. Ctrl a and ctrl e move to the beginning and the end of the line. The next set of options don't work for me. Apparently alt b and alt f are supposed to go backward and forward by a single word. That would be really useful. ctrl k is supposed to delete the next sentence, but doesn’t do anything for me, and ctrl u is supposed to delete the sentence before where you are, but it deletes the whole prompt.
+
+The next 3 all work perfectly for me. ctrl L will clear the screen, ctrl c with stop the model responding, and ctrl d will exit ollama, the same as typing /bye. This list of commands is something patrick started working on a while back and apparently its tough to get working right. I use a weird keyboard layout, but it doesn't work on qwerty either, for me at least. If it works for you let me know in the comments below. 
+
+The next thing I want to look at is the change with llava prompts. So we are still in ollama, but I want to launch the llava model. So /bye and then I will run `ollama run llava`. Now "Describe this image" and drag over an image from my machine. You see it pastes in the path to the image. press enter, and you get a description. But if you did it the other way, it didn't work. It gave a weird error. Now you can drag the image over, then ask your prompt. And that works. This only applies to the cli. using the api, you don't provide a path in the prompt. Instead you have to include both the prompt, and an array of base64 encoded images in an images field in your body. And then you can submit that.  so there is nothing new here for the api, its just for the cli.
+
+And that's all that's new with 0.1.18. In the announcement, it does list 4 models as being new, but you don't have to be on the latest version to use them, like you did when the llava models got released. I'll do some videos about those models soon. 
+
+If you find this video useful, let me know in the comments below. And if you want me to cover anything else, let me know what you want in the comments as well. Thanks so much for watching. goodbye.

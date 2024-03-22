@@ -1,0 +1,13 @@
+	One of the great things about Ollama is that it makes it super easy to download models that work with Ollama. You just run `ollama pull llama2` or `ollama run llama2` and if you don't have the model, it starts downloading. But lets say you also want to use the model in lmstudio. Well, now you go to `.ollama/models/blobs` and good luck figuring out which one is llama2. 
+	
+	So I created a simple shell script that creates symlinks to a folder of your choosing. You can find the script in the github repo, matts shell scripts and its called syncmodels. This was written for macos, so you might need to adjust it a bit for linux and windows.
+	
+	let's go over the script here.
+	
+	The first thing you are going to have to do is set the base directories. First there is the ollama directory. On mac, that’s .ollama/models off the users root. the manifest directory and blob directory are probably going to be the same for everyone. Public models directory is where ever you want the symlinks to be. Do not set this to anything with files in it, because my first step is to delete everything. 
+	
+	Next, go to that destination directory and delete everything in it, so again, don't point this to a populated directory. 
+	
+	Then we are going to iterate through the manifest directory searching for models. I set the user, model, tag, and digest for each model and tag. Notice that I use jq to parse the manifest file. This is a json file and jq is a super cool way to parse json on the command line. Then for each tag file, create the symlink and print out the model to the cli. And that’s it. Now you can go over to a tool like lmstudio and it finds all the models you have already downloaded from ollama inside of lmstudio. 
+	
+	let me know if this is useful for you. I wrote it a few months back and then have mentioned it every few weeks in the discord. So maybe next time you can just find it here on YouTube. 

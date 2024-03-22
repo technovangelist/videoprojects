@@ -1,0 +1,16 @@
+hey there, it's matt, one of the maintainers of ollama and i want to show you one of the new models we added to the library. Its called stablelm dash zephyr. It’s a 3 billion parameter model that feels like a 7billion parameter model but a whole lot faster. let's check it out. First if you don't have ollama, you can get started at ollama.ai. Then after installing, run ollama run stablelm-zephyr. why is the sky blue. Boom, look at that thing go. That’s awesome. Now the output isn't always perfect...sometimes its weird.
+
+lets take a look at the modelfile. In the repl i can type '/show modelfile'.  And you can see there is no system prompt. We will take a look at how to change that a bit later. 
+
+Stable LM Zephyr is the new model from Stability AI, the folks behind Stable Diffusion. Its being released with a 'non commercial community license'. It has a 4k context size which is decent. But it isn't uncensored, so asking questions about making drugs or bombs won't work. And you can't even ask for a recipe for dangerously spicy mayo. Some folks may think the license and the censoring is a deal breaker, but depending on what you are looking for I think it can be the perfect model for a lot of people. Like for those really low end of machines  with just 4 gigabytes of memory or just when you need a super fast response, its absolutely amazing. 
+
+So let's tweak the prompt a bit. If you just want to try a few things, you can make changes in the repl. slash set system - You are a helpful AI assistant. Always answer every question in Dutch. and enter. and now my question. Why do dogs always spin in circles before they poop? Now I think that looks OK, but then again my Dutch is horrible. And I don't think Rosetta ever covered that topic. I lived in Amsterdam for almost 10 years but my job involved close to 90% travel, so never really got a chance to learn, and my manager at OpenText didn't think it was an important thing to focus on. Oh well. Lets update that to be a bit more useful. slash set system - You are a helpful AI assistant. Always answer every question in the same language it was asked in. Now that same question gets a better response. 
+
+If you want to make that a bit more permanent, turn it into a modelfile. I can add From stablelm-zephyr. then system and three double quotes, and my system prompt and then three double quotes to close it out. The template and stop words are inherited from the parent model so i don't need to include them.  I'll exit and run ollama create myzephyr. and then ollama run myzephr. ask my dog spinning question and boom. 
+
+I really like this model. It's going to be my default for a lot of things, especially when i need something that runs really fast. 
+
+I hope you found this interesting, and let me know if you would like to see something else. 
+
+thanks a lot for watching
+goodbye.

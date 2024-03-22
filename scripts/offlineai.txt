@@ -1,0 +1,20 @@
+Why are you using that online AI system? Every answer you have is probably wrong. It doesn't always provide a better answer. It doesn't always run faster. You don't have to be a machine learning expert to run an AI system. You don't even need to be a developer.  If you found this video, you probably have the right skillset to get it going. All you need is a desire to run AI offline and local, a computer, and a willingness to try something new. That's it.
+
+Of course, there are also reasons you might want to continue using online tools. Maybe you are always connected, maybe you aren't concerned about privacy or security, maybe you only have a phone, maybe....well... that’s all the reasons i can think of.
+
+So let's get you on your way to running AI offline.
+
+This video will be using a Mac because that's just the easiest platform to use. Linux is almost as easy. And then on windows you just need to turn on WSL then its exactly like using Linux. 
+
+Your first step is to open your web browser and visit ollama.ai. This is the easiest tool out there by far, especially when it comes to installation. OK, click the big download button. If you are on Linux or on Windows with WSL, then choose the Linux tab and run the command shown. If running that curl command scares you, there is a link to the shell script so that you can verify it. On Mac, go to the macOS tab and click the Download button. When the file is downloaded, double click the file that is downloaded and then run the file in there. You have to verify a few things but pretty quickly you will be up and running. 
+
+For some reason, folks are scared of the terminal, but there is nothing to be scared of. So open the terminal and type `ollama run mistral`. Mistral is an AI model that you can run locally. But since you don't have it yet, it needs to download first. You don't have to go through any steps, its already downloading. That completes quickly, and soon you will be plopped into the UI to be able to ask a question. 
+
+Now you can start asking questions just like you would with ChatGPT or Claude or anything else. To quit, you can use a slash command... / bye. Or you can press the control key at the same time as the d key. Next time you want to ask a question, open a command prompt, and type the same command, ollama run mistral. You already have the model, so it will start in seconds and you can ask your question. 
+
+As you get more comfortable with this you can go back to the web page and find different models in our library. And soon we will make it easy to find models made by other folks as well. Depending on the questions you are asking, there may be a better model, but mistral is a pretty good model to get started with. 
+
+There are a few more details you may or may not care about. First, other than downloading the app and the mistral model, there is no network required. If you have an Apple Silicon mac, or a linux or windows box with a recent Nvidia GPU, we will take advantage of it without any extra steps. If you are a developer, there is a lot you can do with this and even that is pretty easy. 
+
+So I think you have to agree that this is the easiest tool out there to get up and running.. to run AI models locally. If you have any questions, leave them below. Thanks so much for watching. Goodbye. 
+

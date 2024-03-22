@@ -1,0 +1,27 @@
+You just installed Ollama on your computer and you have played around with the llama2 or mistral model. And now you want to try out some other models and you aren't sure which to use. What are your options?
+
+Well, the best place to learn about other models is the Ollama Library. Just go to ollama.ai and navigate to the Models link. This is a list of all the models available on the official library. You can sort this list by Featured, which is ordered by what the team thinks is best for most. By the most popular, which looks at which models have been downloaded the most, in the last few weeks. And by most recent, which is how you can discover the newest models. 
+
+One of the recent models to be added is llama-pro. This is a model from Tencent Applied Research Center and is apparently really good at general language as well as programming and math. The next step is to look at the tags page. This lists the tags available for that model, which is everything after the colon in the name. 
+
+At the top you will usually find the 'latest' tag. Despite the name, this actually has nothing to do with what is the latest version. It's more about what is the most popular variation. If you leave off a tag, Ollama will use the 'latest' tag. Under the latest tag name, you can see the size of the model, the start of the sha256 digest, and the age of the variation of the model. To the right is the command you would run if you want that version. 
+
+Now take a look at the digest. Notice that for this model you see fc5c0d744444. Then notice that you see the same digest for the instruct tag, and the 8b-instruct-q4_0 tag. This means all three of those tags are aliases for each other. An instruct model is usually trained to work with a chat interface and will respond to you in an expected way. The alternative on this model is text. Text models tend to be more of a base model that you could train yourself, if you knew how to do it. 
+
+This model just has an 8 billion parameter option. This means that it should fit in about 8 gb of ram. It will actually take closer to 4 gb, but your os needs some space and the context needs more. So 8 is a good safe number. In most cases, the number of parameters is a good place to start with how much memory is required, but its not directly correlated. I'll make a video in the future that deals with understanding how memory works with these models. 
+
+Then there are a whole bunch of tags that use the letter q followed by a number and sometimes a k. These refer to quantization. I'll create a video that deals with this soon. But essentially quantization is a type of compression. q4 means that the 32bit floating point numbers in the model have been converted to 4bit integers. At this point, that sounds a bit like magic, but trust me, it works really well. q4_0 is usually the model you want to start with. 
+
+Now lets click on the latest tag. here we can see information about the model. probably the most important info here that you might refer to later is the layers of the model. 
+
+In Ollama, a model is a little different from what most other tools call a model. Usually a model is just the model weights and nothing else. But they are useless without a system prompt and a template. So Ollama puts all of that together. Each component is a layer in the model, much like docker's layers. On this tags screen you can see the different layers. First we see parameters. In this case we have a list of stop parameters which tells ollama to ignore everything after it sees those phrases. 
+
+Then there is a template. This tells ollama how to format your prompt in a way the model will understand. This is determined based on the training process the model developers used. 
+
+Let's go back to the top level. Now that you know how you can find a model, which model do you choose? Well that is a harder question to answer. There is a lot of overlap when it comes to what the models do. And there are benchmarks that let you know how a model performs. But those benchmarks are useless unless all your questions are included in the benchmark. So the best way to know which model to try is to just try all the models yourself and see what works well for you. 
+
+I have a tool that I worked on that helps you determine what is the best model for your questions. Soon I will share that, along with a video that explains it here on this channel. Be sure to subscribe to be notified when that comes out. 
+
+And that’s how you can find the models we support. If you have any further questions, let me know in the comments below. 
+
+thanks so much for watching. goodbye. 

@@ -1,0 +1,32 @@
+
+hey there, its matt williams from ollama. One of the questions we get every now and then, including just today,  is about how we download the models and how we store them on the file system. So lets go over that.
+
+When you install ollama, it creates a .ollama directory in your home folder. That has a Logs directory and a Models directory. Inside Models is Manifests and Blobs. Manifests hold the descriptions of the models and Blobs holds the files with the actual content. So go into manifests and you will find a directory for each source, and probably the only one is registry.ollama.ai. Then go to library. Ok so i have two directories here, orca and sentiments. 
+
+Lets step back a bit and see how i got here. first i ran 'ollama pull orca'. this pulled the orca model and stored it on the local filesystem. Then I went to the examples directory in the ollama repo that I cloned to my machine. Then I ran 'ollama create sentiments -f ./sentiments/Modelfile'. So you might think that sentiments was created locally so shouldn't be stored in the same folder as orca. Well, every model goes into a server then a namespace. This will make more sense when we open our registry to pushes and we have alternate registries. 
+
+But if you wanted to have sentiments stored somewhere else, you can specify a host, slash namespace, slash modelname. so localhost, slash matt, slash model. or company website, slash user name, slash model. 
+
+Lets go back to the registry/library folder. we have our two models. now take a look in orca then open latest. this manifest defines all the layers that make up a model. You can see there is a layer for the actual model, a layer for the template, and a layer for the system prompt. The model file is a huge binary file, so we won't open that one. But lets look for the template file. 
+
+I'll copy the full digest value for the template. And now in a different terminal I will go to .ollama/blobs. cut and paste the digest value. and now you can see the full template. in fact lets run orca and then slash show template. It’s the same thing. 
+
+Back in the manifest we can see a system layer. we can go through the same steps and again in both places they show the same info.
+
+so lets go up from orca to sentiments and take a look at that latest. notice that this one also has a model, a system prompt, and a template. but before we go far with this one, lets also look at the source modelfile that you can find in the examples directory in the repo. Actually this isn't the modelfile in the examples anymore. as i made this video i realized I made a mistake which I have since corrected. and i will tell you more about that in a second. There are just two instructions here, a model, and a template. 
+
+Now back in the sentiments/latest file we can see that model and system share the same digest as the orca/latest file and so we can see they share the same actual files. We only store one copy of the orca model weights despite having two models that reference it. The sentiments modelfile doesn’t mention the system prompt. so where did it come from?
+
+Well since sentiments uses the orca model, we inherit all the instructions that aren't overridden in the sentiments modelfile. This can be a bit confusing and something to look out for.
+
+In this case, its just confusing for the user. The system prompt doesn't get used so there is no harm, but if someone else uses sentiments as their base model, they may get frustrated that their own system prompt doesn't work. 
+
+So lets fix this. Ill remove the sentiments model with the ollama command. You probably wont need to do this in the future, but I want to ensure everything stays clean in the blobs folder. Now the System prompt is its own instruction which is referenced in the Template.
+
+So I will run the create command again, and take a look at the updated manifest. Now the manifest uses our new system prompt and a new template. 
+
+When you run ollama pull orca, ollama reaches out to the registry and finds the orca manifest and downloads it. Then it finds each layer and if the layer doesn't already exist in blobs, it will download each of them. And that’s it. As you can see, although the files look a bit cryptic, it turns out it's pretty easy to figure out. 
+
+I hope you found this useful. If you run into any other questions, ask them in the discord. we can get the answer to you and maybe I'll create another video or at least expand on the documentation.
+
+Thanks so much, bye

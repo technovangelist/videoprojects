@@ -1,0 +1,37 @@
+Function calling. This has to be the worst name for a feature. Every company I have worked for had marketing folks who had no idea what the feature was and called that feature something that sounded cool but had nothing to do with the feature. 
+
+So if you know what this feature is, pretend you don't and think of what function calling should mean. I would think that function calling in a model means that the model calls functions. And that would be a great feature for a model to have, but the model has no ability to call functions when you use function calling. Function calling is all about controlling the format of the output from the model. When you get the response in a format you expect, then you can reliably call a function. But you are calling the function. The model is not. Or even if we expand it out to the company that created the feature, openai does not call the function, your program that calls the openai api calls the function. 
+
+Don't believe me? Let's go to the OpenAI docs and go to function calling. Scroll down to this 4 step process. Step 3, YOU parse the string output of the model into json, then YOU pull out the values then YOU call the function. I am great with that. It's an awesome feature. It would just be better if the name was accurate. 
+
+OK, so with that settled let's look at how the openai api achieves function calling. One of the important steps is to inform openai about your functions. What the function does isn't relevant. This is just how you let the model know about the schema the output should stick to. The rest of this example is using the chat api to ask the model a question. Then the chatcompletion message shows us the output string that we format to json. 
+
+Now let's move on and look at how to achieve this in Ollama. The feature you will find in the docs is referred to as format json which is a bit more descriptive about what is going on. There are 2 requirements to get this working, and one bonus that makes it work even better. You can do it in the API or even in the CLI if you are scripting something in bash.
+
+Let's use Python for this one and I am not going to use the sdk just to keep things more translatable to other languages. We can start with importing requests. Now we can define a payload that we are going to send to the chat endpoint. This includes a model and an array of messages. We don't need to include a system prompt, since there is already one in the model in Ollama. So role user, and content, what is the capital of Germany. Now set response to a post request to http://localhost:11434/api/chat and setting our payload to the json. Now print out the json from the response. 
+
+To get a streaming response from python we need to iterate through the response. So "for message in response.iter lines", then parse the json and print message.content. Let's add "end set to nothing", to put everything on one line, unless the response includes a newline.
+
+python fc.py and we get something saying that the capitol of germany is berlin. Awesome. Now lets make this a touch more dynamic by taking the country as a command line argument. I'll import sys and then set "country" to "sys.argv 1". Then change the content in the payload to be an f string and include country in curly braces.  python fc.py France, gets us Paris. 
+
+Now lets say we want to find the capitol of that country and then calculate the distance between Bainbridge Island, where I live, and that city. So for that we can use the haversine package which takes the decimal latitude and longitude of two places and calculates the distance between them. So let's change our question to What is the decimal latitude and decimal longitude of the capitol of {country}.  
+
+And run python fc.py portugal and we get some coordinates. But the current format of the response changes as we use it. Plus, having to parse the string looking for coordinates will get annoying. The first thing we can do is ask the model to respond as json. let's add it as a new system prompt. We can just add this to the top of our messages. Role is system and content is "You are a helpful assistant. The user will enter a country name and the assistant will return the decimal latitude and decimal longitude of the capitol of the country. Output in JSON." And we can change the user content to just country.
+
+So this is a good start, but notice that we have an explanation of the json format, and sometimes the key names are different. So add format json to the payload and things are a lot better. But if you try it enough you may still see the key names change. So we need to provide a schema to the model. This is the purpose of the function block in the openai api. 
+
+For the schema, I am giving a key, then type and description. Since I need the city, and coordinates, I specify one for each. And I am using the words lat and lon to show that my schema is being respected. If you run the program a few times, you will notice that its not the most precise way of getting the latitude and longitude. But its just a simple demo. 
+
+Now if the model sometimes responded with something that wasn't in the schema, I would do a few shot prompt. Let me show that just so you can see an example. There is a user and I also give the assistant's response. 
+
+For a json response, since we need to get content out of it and we can't do anything until its complete, we should disable streaming. Then we can set cityinfo to the json string in the message content. Now we can call haversine with my latitude and longitude and the coordinates of the capitol city and get a distance. 
+
+If you run this a few times, you may notice that the distance isn't always consistent. Asking a model for latitude and longitude isn't a great use of the system. We can set the temperature to 0 to try to get it to be more consistent but it may still be different from what you get with a Google search. And that depends on where exactly both systems put the dot that says this is the spot that represents the capitol of whichever country.
+
+Hopefully you now see how you can use format json to get a consistent output from a model. Because that's all the terribly named feature of function calling does. It gives you consistent output from the model, so that you can call a function with the data. Which is a very cool thing to be able to do. 
+
+Function calling using the new openai compatible api isn't available yet at the time of recording so you need to use the native ollama api for this. I don't think anyone is going to want to do it the openai way, because its just a lot more complicated and doesn't offer any benefit. But it has openai in the name so maybe that's good enough to justify suffering through the pain. 
+
+What do you think. Is Function Calling, I mean format json, an important feature for you? Are you using it today? let me know down in the comments below. And if there is another feature you would like to see let me know about that in the comments. When I started this latest focus on the channel a month ago, I had a simple list of about 50 ideas for future videos. But your comments over the last few weeks have upped that to well over 100. Keep them coming though because there are so many good ones I never thought of. 
+
+thanks so much for watching this one. goodbye.

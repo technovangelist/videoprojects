@@ -1,0 +1,21 @@
+You have just taken some photos with that new camera of yours. It can be a lot of fun taking the pics But then you bring it home and offload it to your computer. And now you have hundreds, or thousands of images with horrible names. How do you solve this? Well, you could just use AI to name them like this. It runs in seconds completely locally on your machine; your images never get shared online, until you are ready to do so. Want to see how this is done?
+
+Let's check out the code I wrote to build this. Even if you know nothing about Typescript or more specifically, Deno, it should be pretty easy to follow. Or if you just want the executable for mac, windows or linux, then wait till the end of the video and I'll show you where to get it. 
+
+Here is the main function. I get the current working directory and then iterate through all the files. If a file is a jpg or png, then I am going to get a base64 encoding of the file. More about why in a second. Now I call getkeywords. This returns a promise of an array of keyword strings.
+
+So lets scroll up to the definition of getkeywords. I am using the generate endpoint for ollama which you can learn about here in the repo docs in the api.md file. You POST to that endpoint and pass it the body which needs to be a string of the json. So up above, I created the body that actually gets sent to the endpoint. I specify the model. I am using llava:13b, which is a 13 billion parameter model. Since I am going to use the output of this call in a function, I want to output JSON. Then in the prompt, I describe what I want. "describe the image as a collection of keywords". Output in JSON format is important when we want to format json. You need to specify it in both places. And then its helpful to include the schema you want to use for your json. 
+
+Then because I am using a llava model, I need to give an array of base64 encoded images. I think it only understands one image for now, but it still needs to be an array. Then since the output of the model isn't for human consumption, I set stream to false. That just makes it easier to deal with. 
+
+Now I can get the JSON from the response, parse it, and then keywords is just the array of keywords.
+
+The next line in my main function is to take that array of keywords and an extension and generate a file name. This starts with an array map that replaces spaces with underscores, then joins the keywords with dashes, and attaches an extension. And then we are done there. 
+
+The last step is copyfilesync. This just takes the original file and copies it to our new filename. 
+
+If you want to take a look at the code, you can find it on my github right here. Or if you just want the executable to try on your own images, then you can find it in the releases section. You will probably want to rename the download to something like airenamer and ensure that its executable. And of course, you need to have Ollama installed on your system and have the llava:13b model pulled. Oh, and you also might want to ensure that your images are backed up, just in case. 
+
+I hope you have  as much fun with this as I had writing it.
+
+Thanks so much for watching, goodbye.

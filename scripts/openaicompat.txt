@@ -1,0 +1,44 @@
+OpenAI. Heard of them? They have this AI product that is kinda popular, maybe you heard of that...ChatGPT. Well they have an API for others to use to leverage OpenAI's products. It's not the best to use, but its there and its pretty popular. 
+
+If you have been using Ollama for any amount of time, you know there is an Ollama Discord, and if there is one question that is more frequently asked than any other....it would have to be...no question, not even close.... it's... why is there only one freaking channel on this server. But this isn't that video. If you look at the second most popular question of all time... again, its so obvious, you only have to be in the discord for 30 seconds, it's about... why is my gpu not being used. Again, wrong video for that question.  But the third most popular question... is absolutely,  unequivocally, where is OpenAI API compatibility. 
+
+People don't even know what it means and they want it. Well, as of the release of Ollama 0.1.24, its right there for you to use. Nothing special for you to turn on. Now there are some features that aren't available yet, but for most folks it will just work. So does that mean that folks who spent the time adding Ollama to their product just wasted the equivalent of a few Bluey's? No, but Bluey is pretty awesome, even if us American viewers don't get to watch the pregnant Dad episode. 
+
+What else is in this release? Not much, its really all about OpenAI. Not that I don't appreciate EASP's pointer to llm-ollama or MRAISER's cuda contribution. But... let's talk OpenAI. 
+
+So this has API in the name of the feature but lets start with the opposite point of view. The end user who is working with ChatGPT for their regular jobby job. I am on a Mac so I did a search for regular client tools that use OpenAI in some form or another and do not support Ollama. At first I was going to use Obsidian, but it seems that most of the tools either support Ollama now, or don't have a way to add a custom URL. 
+
+Why is adding a custom URL important for ChatGPT? Well if you are a company and the very real privacy and security issues with ChatGPT scare you, then you can host the service yourself on your Azure environment. And then you probably want your users to use that service so that your company secrets don't get discovered by a reporter like what happened to Samsung. 
+
+I found a cool tool called MindMac. This is a super slick tool and I think I may consider buying it. Now when I first tried it I could have sworn Ollama wasn't in the supported list, so I set up Ollama as if it were OpenAI. Then when I started writing this script, I saw Ollama was in the supported list. So less useful for me for this video. 
+
+Then I found ChatWizard on Github and got it installed. This works great with chatgpt but has no idea what ollama is. If you come into settings you can see a place to put in a URL. At first I put in http://localhost:11434/v1 as per the ollama release announcement. But this wouldn't work. Thankfully I can use the Ollama Debug environment variable to figure out what is going on. There, you see that? It says /v1/v1. 
+
+Go back into settings and remove the v1 from the url. Before i knew you could add a model, I just did an ollama cp nous-hermes2-mixtral gpt-3.5-turbo, tricking the system to think it really was on OpenAI and that works. But it turns out you can add a model in the...ummm, ice block view? Just enter a model name and then you can define a cost if you like. There is no checking that the model exists, so be careful here. Then the model just works in the chat. Pretty nice. 
+
+Now lets change gears and get a little bit more technical, a little closer to the developer persona. AutoGen Studio. This is a pretty cool app from the folks at Microsoft that brought us AutoGen. The idea of Autogen is to make it super easy to to build agents that will do things for you using the power of AI. This gets more powerful when you combine the agents to work together on your tasks.
+
+AutoGen and AutoGen Studio work with the OpenAI API. Autogen is a purely developer product, while studio is a web gui that is a touch more friendly.  It has been popular to use Ollama with these according to the posts in the discord, but to do so you have to use LiteLLM in the middle. And I think even set up a webserver. Well, you used to have to do that. Now you can just use Ollama directly. Once you get Autogen Studio installed and up and running...which is easier said and done because its Python, go to Build and then the Models tab and then click the green New Model button. 
+
+Enter a model name, I'll use dolphin mistral, and then the API key. Something has to go in here, but it doesn't really matter what. Then there is the baseURL. The default to go here is http://localhost:11434. And that's it. Try out the model. Hmm, it failed. Ok, let's add the v1 to the url. Try again. And there we go. 
+
+From here you can create skills which are specific activities you want your agent to do. This could be to search the Internet or search a database or parse a file or whatever. These skills are written in Python so there is almost no limit to what you can do. Then you create agents that have a system message, a model, and possibly some of the skills defined. Then finally a workflow that orchestrates the different agents to do some sort of complex task. 
+
+Let's just use one of the examples, the General Agent Workflow. And have it run through the Sine Wave example. 
+
+Now this takes a minute or two on my machine. But while its working we can verify its running by checking out the Ollama logs as well as the Autogen logs. And there are the messages going into the local model. This example is writing a python script. It's simple so any of the common models should handle it. But for more complex tasks, perhaps a larger more specific model is required. Or if your workflow is querying a database using a skill and then interpreting that to English or another language, maybe a super lean and fast model is the approach to take. 
+
+This is super cool, but there is probably a warning somewhere not to use this on your local machine. It's creating code and running it without your input. So it could do a lot on its own. Now I am not worried that this is SkyNet or bringing on the doom of AGI. But maybe it could wipe out your entire machine. That's probably why docker is recommended for the python environment. I might actually spin up a new machine on brev to secure it.
+
+I think it would be great to be able to cover Autogen in more detail in the future. Let me know in the comments if that is interesting to you. 
+
+Finally let's look at going one level deeper. You are now a full on developer. So we need to open VSCode. And now... go to it. Ahh, we need some help. So let's look at OpenAI's developer site. I'll go to chat and here is a code sample ready for us to try. Back to VScode, and I want to use Deno for this one. So I'll do a quick Deno init which creates the main.ts and deno json files. And then I'll replace the existing code with the code sample from OpenAI. Deno has a different way of dealing with packages, so to use a regular npm package, just throw npm: at the beginning of the import. 
+
+Now we need to update the constructor. First an apikey. I'll just set this to ollama. Next is the baseurl. And that’s going to be localhost and the port,  slash v1. 
+
+That should be all we need. So we can run it. When you use Deno you need to be intentional about the resources used. so 'deno run --allow-net main.ts' and there is our message from ollama. And we can watch the logs to ensure that it really is Ollama running this openAI call. To make it a little more pretty we can print just the message content. 
+
+So, we have seen the new OpenAI API compatibility in Ollama and we saw it from 3 different perspectives: a user, a power-user, and an dev. I think this is pretty cool. Using the Ollama API directly is going to be easier, more performant, and generally better, especially with the official js and python libraries, as well as the community created libraries for rust and ruby and r and swift. But if there is an existing tool that uses the openai api today and lets you set the baseurl, then this is going to be super powerful for you. 
+
+Let me know if there is anything else you would like to see on this channel. It seems that a lot of you have been subscribing to the channel and I love every one of those subs. It is so exciting to watch how many of you are interested in me creating more videos, so keep it up and thank you so much for that, and thanks so much for watching this one. goodbye. 
+
