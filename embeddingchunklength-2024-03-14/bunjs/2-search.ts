@@ -67,17 +67,19 @@ for await (const q of questions) {
   for await (const file of allFiles) {
     const embeddings: Embeddings = await Bun.file(file).json();
 
+    try {
     const sortedEmbeddings = embeddings.sort((a, b) => similarity(b.embed, embedquestion) - similarity(a.embed, embedquestion));
     const simscore = similarity(sortedEmbeddings[0].embed, embedquestion)
     if (sortedEmbeddings[0].file === q.a) {
       success++;
       
-      // console.log(`${file}: Success (${simscore}).`)
+      console.log(`${file}: Success (${simscore}).`)
       bestMatches.push({ file: file, score: simscore})
     } else {
       fail++;
-      // console.log(`${file}: Fail (${simscore}).`)
+      console.log(`${file}: Fail (${simscore}).`)
     }
+    } catch {};
   }
   console.log(`Success: ${success} - Fail: ${fail}`);
   console.log(`Best 5 matches: ${bestMatches.sort((a, b) => b.score - a.score).slice(0, 5).map(m => `${m.file} - ${m.score.toFixed(3)}`).join(', ')}`)
