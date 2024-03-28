@@ -1,0 +1,1 @@
+{ "dependencies": { "image-to-base64": "^2.2.0", "ollama": "^0.5.0" } }
