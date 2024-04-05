@@ -1,4 +1,6 @@
-ocrmypdf==16.1.2
+beautifulsoup4==4.12.3
+chromadb==0.4.24
+mattsollamatools==0.0.21
 ollama==0.1.8
 python_magic==0.4.27
 Requests==2.31.0
