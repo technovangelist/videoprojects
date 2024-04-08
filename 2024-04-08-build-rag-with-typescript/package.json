@@ -1,0 +1,17 @@
+{
+  "name": "2024-04-08-build-rag-with-typescript",
+  "module": "search.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chromadb": "^1.8.1",
+    "html-to-text": "^9.0.5",
+    "matts-llm-tools": "^0.0.2",
+    "ollama": "^0.5.0"
+  }
+}
