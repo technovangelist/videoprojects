@@ -2,9 +2,13 @@ import ollama, chromadb, time
 from utilities import readtext, getconfig
 from mattsollamatools import chunker, chunk_text_by_sentences
 
+collectionname="buildragwithpython"
 
 chroma = chromadb.HttpClient(host="localhost", port=8000)
-chroma.delete_collection("buildragwithpython")
+print(chroma.list_collections())
+if any(collection.name == collectionname for collection in chroma.list_collections()):
+  print('deleting collection')
+  chroma.delete_collection("buildragwithpython")
 collection = chroma.get_or_create_collection(name="buildragwithpython", metadata={"hnsw:space": "cosine"})
 
 embedmodel = getconfig()["embedmodel"]
