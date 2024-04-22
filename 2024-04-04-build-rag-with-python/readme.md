@@ -8,3 +8,6 @@
 4. Edit the list of docs in `sourcedocs.txt`
 5. Import the docs: `python3 import.py`
 6. Perform a search: `python3 search.py <yoursearch>`
+
+
+Some folks on Windows seem to have issues with installing this. I guess the install package names are different there. Try `pip install python-magic-bin` to get the magic stuff working.
