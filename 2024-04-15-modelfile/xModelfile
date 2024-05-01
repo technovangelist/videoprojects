@@ -1,0 +1,6 @@
+FROM ./biomistral-7b-q4-km-gguf
+TEMPLATE """<s>
+[INST] {{ .Prompt }} [/INST]
+</s>"""
+PARAMETER temperature 1.8
+PARAMETER stop "<|im_end|>"
