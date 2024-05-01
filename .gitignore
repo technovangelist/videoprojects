@@ -3,3 +3,4 @@ node_modules
 vectordb-stores
 chroma.log
 __pycache__
+chroma.sqlite3
