@@ -4,3 +4,4 @@ vectordb-stores
 chroma.log
 __pycache__
 chroma.sqlite3
+my_chroma_data
