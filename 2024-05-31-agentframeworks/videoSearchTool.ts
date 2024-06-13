@@ -72,8 +72,6 @@ export const videoSearchTool = async (topic: string, maxResults: number = 35): P
 
 export const videoDetailsTool = async (video: VideoSearchResults): Promise<VideoDetails> => {
 
-}
-
   const apiKey = Bun.env.YouTubeAPIKey;
   const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${video.id}&key=${apiKey}`;
   const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${video.channelId}&key=${apiKey}`;
