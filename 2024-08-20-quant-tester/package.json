@@ -1,0 +1,17 @@
+{
+  "name": "quant-tester",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/inquirer": "^9.0.7",
+    "cheerio": "^1.0.0",
+    "inquirer": "^10.1.8",
+    "ollama": "^0.5.8"
+  }
+}
