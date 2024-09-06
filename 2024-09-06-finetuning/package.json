@@ -1,0 +1,14 @@
+{
+  "name": "2024-08-29-finetune",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "ollama": "^0.5.8"
+  }
+}
