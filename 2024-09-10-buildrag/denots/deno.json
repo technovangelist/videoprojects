@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "import": "deno run --allow-net --allow-read importdoc.ts", 
+    "search": "deno run --allow-net --allow-read search.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/fs": "jsr:@std/fs@^1.0.3",
+    "@std/path": "jsr:@std/path@^1.0.4",
+    "chromadb": "npm:chromadb@^1.9.1",
+    "ollama": "npm:ollama@^0.5.9"
+  }
+}
