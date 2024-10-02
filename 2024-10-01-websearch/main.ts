@@ -1,5 +1,7 @@
+import { Readability } from "jsr:@paoramen/cheer-reader";
+
 import ollama from "npm:ollama";
-import * as cheerio from "https://esm.sh/cheerio";
+import * as cheerio from "npm:cheerio@1.0.0";
 
 const searchUrl = Deno.env.get("SEARCH_URL");
 const query = Deno.args.join(" ");
@@ -15,7 +17,7 @@ async function getNewsUrls(query: string) {
 		await searchResults.json();
 	const urls = searchResultsJson.results
 		.map((result) => result.url)
-		.slice(0, 5);
+		.slice(0, 1);
 	return urls;
 }
 
@@ -31,20 +33,30 @@ async function getCleanedText(urls: string[]) {
 	return texts;
 }
 
-
 function htmlToText(html: string) {
 	const $ = cheerio.load(html);
-	$("script, source, style, head, img, svg, a, form, link, iframe").remove();
-	$("*").removeClass();
-	$("*").each((_, el) => {
-		if (el.type === "tag" || el.type === "script" || el.type === "style") {
-			for (const attr of Object.keys(el.attribs || {})) {
-				if (attr.startsWith("data-")) {
-					$(el).removeAttr(attr);
-				}}}
-	});
-	const text = $("body").text().replace(/\s+/g, " ");
-	return text;
+
+  // Thanks to the comment on the YouTube video from @eliaspereirah for suggesting 
+  // using Mozilla Readability. I used a variant that made it easier to use with 
+  // cheerio. Definitely simplifies things
+		const text = new Readability($).parse();
+
+  // What I had before
+
+	// $("script, source, style, head, img, svg, a, form, link, iframe").remove();
+	// $("*").removeClass();
+	// $("*").each((_, el) => {
+	// 	if (el.type === "tag" || el.type === "script" || el.type === "style") {
+	// 		for (const attr of Object.keys(el.attribs || {})) {
+	// 			if (attr.startsWith("data-")) {
+	// 				$(el).removeAttr(attr);
+	// 			}
+	// 		}
+	// 	}
+	// });
+	// const text = $("body").text().replace(/\s+/g, " ");
+
+	return text.textContent;
 }
 
 async function answerQuery(query: string, texts: string[]) {
@@ -54,9 +66,11 @@ async function answerQuery(query: string, texts: string[]) {
 		stream: true,
 		options: {
 			num_ctx: 16000,
-		}});
+		},
+	});
 	for await (const chunk of result) {
 		if (chunk.done !== true) {
 			await Deno.stdout.write(new TextEncoder().encode(chunk.response));
-		}}
+		}
+	}
 }
