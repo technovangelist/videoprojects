@@ -8,7 +8,7 @@ If you want to use your own documents, change scripts at the bottom of config.ts
 
 Then run `deno --allow-read --allow-net vectorprep.ts` to create the embeddings.
 
-- Test1: deno --allow-read --allow-net test1.ts
-- Test2: deno --allow-read --allow-net test2.ts
-- Test3: deno --allow-read --allow-net test3.ts
-- Test4: deno --allow-read --allow-net test4.ts
+- Test1: `deno --allow-read --allow-net test1.ts`
+- Test2: `deno --allow-read --allow-net test2.ts`
+- Test3: `deno --allow-read --allow-net test3.ts`
+- Test4: `deno --allow-read --allow-net test4.ts`
