@@ -51,4 +51,4 @@ def get_collection_names(chroma_client: chromadb.Client) -> list[str]:
   if hasattr(collections[0], 'name'):
     return [collection.name for collection in collections]
   else:
-    return [collection for collection in collections]
+    return collections
