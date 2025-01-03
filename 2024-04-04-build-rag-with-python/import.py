@@ -6,7 +6,7 @@ collectionname="buildragwithpython"
 
 chroma = chromadb.HttpClient(host="localhost", port=8000)
 print(chroma.list_collections())
-if any(collection.name == collectionname for collection in chroma.list_collections()):
+if any(chroma_collection_name == collectionname for chroma_collection_name in chroma.list_collections()):
   print('deleting collection')
   chroma.delete_collection("buildragwithpython")
 collection = chroma.get_or_create_collection(name="buildragwithpython", metadata={"hnsw:space": "cosine"})
