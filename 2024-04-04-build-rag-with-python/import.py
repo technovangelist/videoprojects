@@ -1,12 +1,12 @@
 import ollama, chromadb, time
-from utilities import readtext, getconfig
+from utilities import readtext, getconfig, get_collection_names
 from mattsollamatools import chunker, chunk_text_by_sentences
 
 collectionname="buildragwithpython"
 
 chroma = chromadb.HttpClient(host="localhost", port=8000)
-print(chroma.list_collections())
-if any(chroma_collection_name == collectionname for chroma_collection_name in chroma.list_collections()):
+print(get_collection_names(chroma))
+if any(chroma_collection_name == collectionname for chroma_collection_name in get_collection_names(chroma)):
   print('deleting collection')
   chroma.delete_collection("buildragwithpython")
 collection = chroma.get_or_create_collection(name="buildragwithpython", metadata={"hnsw:space": "cosine"})

@@ -1,7 +1,6 @@
-import re, os, requests, magic, ollama, string, configparser
+import re, os, requests, magic, ollama, string, configparser, chromadb
 from urllib.parse import unquote, urlparse
 from bs4 import BeautifulSoup
-
 
 def get_filename_from_cd(cd):
     """
@@ -59,3 +58,12 @@ def getconfig():
   config = configparser.ConfigParser()
   config.read('config.ini')
   return dict(config.items("main"))
+
+def get_collection_names(chroma_client: chromadb.Client) -> list[str]:
+  collections = chroma_client.list_collections()
+  if collections is None or len(collections) == 0:
+    return []
+  if hasattr(collections[0], 'name'):
+    return [collection.name for collection in collections]
+  else:
+    return [collection for collection in collections]
