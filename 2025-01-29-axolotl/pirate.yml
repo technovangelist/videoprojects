@@ -1,0 +1,51 @@
+base_model: NousResearch/Meta-Llama-3.1-8B
+load_in_4bit: false
+strict: false
+
+chat_template: llama3
+datasets:
+  - path: prepared_dataset
+    type: chat_template
+dataset_prepared_path: last_run_prepared
+val_set_size: 0.005
+output_dir: ./outputs/lora-out
+
+sequence_len: 4096
+sample_packing: true
+eval_sample_packing: false
+pad_to_sequence_len: true
+
+adapter: qlora
+lora_r: 64
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_linear: true
+lora_modules_to_save:
+  - embed_tokens
+  - lm_head
+peft_use_dora: true
+
+
+gradient_accumulation_steps: 2
+micro_batch_size: 2
+num_epochs: 2
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+bf16: true
+tf32: true
+
+gradient_checkpointing: true
+logging_steps: 1
+flash_attention: true
+
+warmup_ration: 0.1
+evals_per_epoch: 1
+saves_per_epoch: 1
+weight_decay: 0.0
+deepspeed: /home/ubuntu/axolotl/pirate/deepspeed_configs/zero2.json  # Replace with actual full path
+special_tokens:
+  pad_token: "<|finetune_right_pad_id|>"
+save_safetensors: true
