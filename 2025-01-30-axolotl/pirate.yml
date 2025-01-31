@@ -1,5 +1,5 @@
 base_model: NousResearch/Meta-Llama-3.1-8B
-load_in_4bit: false
+load_in_4bit: true
 strict: false
 
 chat_template: llama3
@@ -27,7 +27,6 @@ lora_modules_to_save:
   - lm_head
 peft_use_dora: true
 
-
 gradient_accumulation_steps: 2
 micro_batch_size: 2
 num_epochs: 2
@@ -46,7 +45,7 @@ warmup_ration: 0.1
 evals_per_epoch: 1
 saves_per_epoch: 1
 weight_decay: 0.0
-deepspeed: /home/ubuntu/axolotl/pirate/deepspeed_configs/zero2.json  # Replace with actual full path
+deepspeed: /home/ubuntu/axolotl/pirate/deepspeed_configs/zero2.json # Replace with actual full path
 special_tokens:
   pad_token: "<|finetune_right_pad_id|>"
 save_safetensors: true
