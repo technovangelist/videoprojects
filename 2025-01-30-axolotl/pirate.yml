@@ -4,8 +4,10 @@ strict: false
 
 chat_template: llama3
 datasets:
-  - path: prepared_dataset
+  - path: winglian/pirate-ultrachat-10k
     type: chat_template
+    message_field_role: role
+    message_field_content: content
 dataset_prepared_path: last_run_prepared
 val_set_size: 0.005
 output_dir: ./outputs/lora-out
@@ -30,7 +32,6 @@ gradient_accumulation_steps: 2
 micro_batch_size: 2
 num_epochs: 2
 optimizer: adamw_bnb_8bit
-lr_scheduler: cosine
 learning_rate: 0.0002
 
 train_on_inputs: false
