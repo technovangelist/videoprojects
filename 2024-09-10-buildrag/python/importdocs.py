@@ -1,15 +1,12 @@
 import chromadb
-from functions import readtextfiles, chunksplitter, getembedding
-
-
-
+from functions import readtextfiles, chunksplitter, getembedding, get_collection_names
 
 chromaclient = chromadb.HttpClient(host="localhost", port=8000)
 textdocspath = "../../scripts"
 text_data = readtextfiles(textdocspath)
 
 collection = chromaclient.get_or_create_collection(name="buildragwithpython", metadata={"hnsw:space": "cosine"}  )
-if any(collection.name == collectionname for collection in chromaclient.list_collections()):
+if any(collection.name == chroma_collection_name for chroma_collection_name in get_collection_names(chromaclient)):
   chromaclient.delete_collection("buildragwithpython")
 
 for filename, text in text_data.items():

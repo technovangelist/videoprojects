@@ -1,6 +1,7 @@
 import os
 import re
 import ollama
+import chromadb
 
 def readtextfiles(path):
   text_contents = {}
@@ -41,3 +42,13 @@ def chunksplitter(text, chunk_size=100):
 def getembedding(chunks):
   embeds = ollama.embed(model="nomic-embed-text", input=chunks)
   return embeds.get('embeddings', [])
+
+
+def get_collection_names(chroma_client: chromadb.Client) -> list[str]:
+  collections = chroma_client.list_collections()
+  if collections is None or len(collections) == 0:
+    return []
+  if hasattr(collections[0], 'name'):
+    return [collection.name for collection in collections]
+  else:
+    return collections
