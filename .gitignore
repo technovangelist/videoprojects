@@ -4,3 +4,9 @@ node_modules
 *.bin
 *.sqlite3
 chroma.log
+
+# Python temporary files and folders
+__pycache__/
+
+# Python venv folders
+.venv/
